@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品列表</title>
+    <style></style>
+    <script src="{{ url_for('static', filename='/script/jquery-3.6.0.js') }}"></script>
+    <script>
+        var cartItems = []; // 存储购物车中的产品
+        var fl = 0;
+        $(document).ready(function () {
+            // 加载产品列表
+            $.getJSON("http://localhost:5000/products", function (data) {
+                $.each(data, function (index, product) {
+                    var stock = product.中止 == true ? "在售" : "售罄";
+                    var addButton = '<button onclick="addToCart(' + product.产品id + ', \'' + product.产品名称 + '\')">+</button>';
+                    var removeButton = '<button onclick="removeFromCart(' + product.产品id + ')">-</button>';
+                    var row = '<tr><td>' + product.类别 +'</td><td>' + product.产品id + '</td><td>' + product.产品名称 + '</td><td>' + product.单位数量 + '</td><td>' + stock + '</td><td>' + addButton + ' ' + removeButton + '</td></tr>';
+                    $('#productList tbody').append(row);
+                });
+            });
+        });
+
+        // 将产品添加到购物车
+        function addToCart(productId, productName) {
+            // 检查产品是否已经在购物车中
+            var existingItem = cartItems.find(function (item) {
+                return item.id === productId;
+            });
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                fl = fl + 1;
+                var newItem = {
+                    id: productId,
+                    name: productName,
+                    quantity: 1
+                };
+                cartItems.push(newItem);
+            }
+            updateCart(); // 更新购物车显示
+        }
+
+        function removeFromCart(productId) {
+            // 查找购物车中对应产品的索引
+            var itemIndex = cartItems.findIndex(function (item) {
+                return item.id === productId;
+            });
+
+            if (itemIndex !== -1) {
+                cartItems[itemIndex].quantity--;
+                if (cartItems[itemIndex].quantity === 0) {
+                    cartItems.splice(itemIndex, 1); // 若数量减少至0，则从购物车中移除该产品
+                    fl = fl - 1;
+                }
+                updateCart(); // 更新购物车显示
+            }
+        }
+
+        // 更新购物车显示
+        function updateCart() {
+            $('#cart').empty();
+
+            if (cartItems.length === 0) {
+                $('#cart').html('<p>购物车是空的。</p>');
+                return;
+            }
+
+            var cartContent = '<table><thead><tr><th>物品ID</th><th>产品名称</th><th>数量</th></tr></thead><tbody>';
+
+            $.each(cartItems, function (index, item) {
+                cartContent += '<tr><td>' + item.id + '</td><td>' + item.name + '</td><td>' + item.quantity + '</td></tr>';
+            });
+
+            cartContent += '</tbody></table>';
+
+            $('#cart').html(cartContent);
+        }
+
+
+        function checkout() {
+            // 构建订单信息
+            var order = {
+                flag: fl,
+                items: cartItems
+            };
+
+            // 创建 XMLHttpRequest 对象
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:5000/purchase", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // 结算成功，跳转到指定页面
+                    alert("结算成功");
+                    window.location.href = "http://localhost:5000/receive_order";
+                } else {
+        }
+            };
+
+            xhr.onerror = function () {
+                alert("结算失败");
+            };
+
+            // 发送购物车信息给后端
+            xhr.send(JSON.stringify(order));
+        }
+    </script>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/fonts/iconfont.css">
+    <link rel="stylesheet" href="../static/css/style2.css">
+</head>
+
+<body>
+    <header>
+        <div class="w header">
+            <nav class="nav">
+                <a href="zhuye.html" class="logo">
+                    <img src="../static/images/logo.gif" alt="">
+                </a>
+                <ul class="nav-meau">
+                    <li><a href="http://localhost:5000" class="active">首页</a></li>
+                    <li><a href="http://localhost:5000/chanpingzhanshi" >产品展示</a></li>
+                    <li><a href="http://localhost:5000/about">联系我们</a></li>
+                </ul>
+            </nav>
+            <ul class="user">
+                <li><a href="http://localhost:5000/login">登录</a></li>
+                <li><a href="http://localhost:5000/register">注册</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="header-bg">
+        <img src="../static/images/banner.png" alt="">
+        <div class="title">
+            购物中心
+        </div>
+    </div>
+
+    <div class="content w py-3 contentBlog">
+        <div class="content-l">
+            <div class="row">
+                <div class="col-4">
+                    <div class="card item" data-src="">
+                        <h2>产品列表</h2>
+                        <table id="productList">
+                            <thead>
+                                <tr>
+                                    <th>类别</th>
+                                    <th>物品ID</th>
+                                    <th>物品名字</th>
+                                    <th>规格</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- 产品会动态加载到这里 -->
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="content-r">
+            <div class="cart">
+                <h2>购物车</h2>
+                <div id="cart">
+                    <!-- 购物车内容会动态加载到这里 -->
+                </div>
+
+                <button onclick="checkout()" class="butn">结算</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

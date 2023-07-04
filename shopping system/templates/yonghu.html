@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户中心</title>
+  <script src="{{ url_for('static', filename='/script/jquery-3.6.0.js') }}"></script>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/fonts/iconfont.css">
+  <link rel="stylesheet" href="../static/css/style2.css">
+</head>
+
+<body>
+  <header>
+    <div class="w header">
+      <nav class="nav">
+        <a href="http://localhost:5000" class="logo">
+          <img src="../static/images/logo.gif" alt="">
+        </a>
+        <ul class="nav-meau">
+          <li><a href="http://localhost:5000" class="active">首页</a></li>
+          <li><a href="http://localhost:5000/chanpingzhanshi" >产品展示</a></li>
+          <li><a href="http://localhost:5000/about">联系我们</a></li>
+        </ul>
+      </nav>
+      <ul class="user">
+        <li><a href="http://localhost:5000/login">登录</a></li>
+        <li><a href="http://localhost:5000/register">注册</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="header-bg">
+    <img src="../static/images/banner.png" alt="">
+    <div class="title">
+      用户中心
+    </div>
+  </div>
+  <div class="content w py-3 contentVideo">
+    <div class="content-l">
+      <div class="row">
+        <div class="card mb-3 box">
+          <button id="sendOrderButton" class="butn">发送订单申请</button>
+
+          <h2>申请成功的订单</h2>
+          <ul id="orderList"></ul>
+
+          <h2>已购买成功订单</h2>
+          <table id="orderTable">
+            <tr>
+              <th>订单ID</th>
+              <th>产品</th>
+              <th>数量</th>
+              <th>总价格</th>
+            </tr>
+          </table>
+          <label for="order-id">订单ID：</label>
+          <input type="text" id="order-id" placeholder="请输入订单ID">
+          <button id="confirm-btn" class="butn">确认收货</button>
+
+          <h2>完成的订单</h2>
+          <table id="order-table">
+            <thead>
+            <tr>
+              <th>订单ID</th>
+              <th>订购日期</th>
+              <th>发货日期</th>
+              <th>到货日期</th>
+              <th>货款确认日期</th>
+              <th>货主名称</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          <script>
+            // 监听按钮点击事件
+            $('#sendOrderButton').click(function () {
+              // 创建包含订单数据的 JSON 对象
+              var orderData = {
+                apply: 1
+              };
+
+              // 将 JSON 对象转换为字符串
+              var jsonData = JSON.stringify(orderData);
+
+              // 发送 POST 请求到后端
+              $.ajax({
+                url: 'http://localhost:5000/accept',  // 将此处替换为实际的后端 URL
+                type: 'POST',
+                data: jsonData,
+                contentType: 'application/json',
+                success: function (response) {
+                  // 请求成功的回调函数
+                  alert('订单申请已发送');
+                  displayOrderDetails(response);  // 显示订单详情
+                },
+                error: function (xhr, status, error) {
+                  // 请求失败的回调函数
+                  alert('订单申请发送失败:', error);
+                }
+              });
+            });
+
+            // 发起AJAX请求获取JSON数据
+            var xhr1 = new XMLHttpRequest();
+            xhr1.open("GET", "http://localhost:5000/show_dd", true);
+            xhr1.onreadystatechange = function () {
+              if (xhr1.readyState === 4 && xhr1.status === 200) {
+                var orders = JSON.parse(xhr1.responseText);
+                displayOrders(orders);
+              }
+            };
+            xhr1.send();
+
+            // 将订单数据展示在表格中
+            function displayOrders(orders) {
+              var table = document.getElementById("orderTable");
+              for (var i = 0; i < orders.length; i++) {
+                var order = orders[i];
+                if (order.dd_id !== "") {
+                  var row = table.insertRow();
+                  var orderIdCell = row.insertCell(0);
+                  var itemIdCell = row.insertCell(1);
+                  var quantityCell = row.insertCell(2);
+                  var cost = row.insertCell(3);
+                  orderIdCell.innerHTML = order.dd_id;
+                  itemIdCell.innerHTML = order.name;
+                  quantityCell.innerHTML = order.num;
+                  cost.innerHTML=order.new;
+                }
+                else {
+                  var row = table.insertRow();
+                  var orderIdCell = row.insertCell(0);
+                  var itemIdCell = row.insertCell(1);
+                  var quantityCell = row.insertCell(2);
+                  orderIdCell.innerHTML = " ";
+                  itemIdCell.innerHTML = order.name;
+                  quantityCell.innerHTML = order.num;
+                }
+              }
+            }
+
+            // 发起AJAX请求获取JSON数据
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open("GET", "http://localhost:5000/success_id", true);
+            xhr2.onreadystatechange = function () {
+              if (xhr2.readyState === 4 && xhr2.status === 200) {
+                var orders = JSON.parse(xhr2.responseText);
+                displayOrders2(orders);
+              }
+            };
+            xhr2.send();
+
+            // 将订单数据展示在列表中
+            function displayOrders2(orders) {
+              var orderList = document.getElementById("orderList");
+              for (var i = 0; i < orders.length; i++) {
+                var order = orders[i];
+                var listItem = document.createElement("li");
+                listItem.innerHTML = order.订单id;
+                var button = document.createElement("button");
+                button.innerHTML = "去购买";
+                button.setAttribute("data-ddid", order.订单id);
+                button.addEventListener("click", sendDdId);
+                listItem.appendChild(button);
+                orderList.appendChild(listItem);
+              }
+            }
+
+            // 点击按钮发送DD ID给后端，并跳转到产品列表界面
+            function sendDdId(event) {
+              var ddId = event.target.getAttribute("data-ddid");
+              var data = { "dd_id": ddId };
+              var xhr3 = new XMLHttpRequest();
+              xhr3.open("POST", "http://localhost:5000/receive_dd", true);
+              xhr3.setRequestHeader("Content-Type", "application/json");
+              xhr3.onreadystatechange = function () {
+                if (xhr3.readyState === 4 && xhr3.status === 200) {
+                  window.location.href = "http://localhost:5000/showgouwu";
+                }
+              };
+              xhr3.send(JSON.stringify(data));
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+              var confirmBtn = document.getElementById('confirm-btn');
+              confirmBtn.addEventListener('click', function () {
+                var orderId = document.getElementById('order-id').value;
+                var data = {
+                  order: orderId,
+                  money: 100
+                };
+
+                var xhr4 = new XMLHttpRequest();
+                xhr4.open('POST', 'http://localhost:5000/finish_order', true);
+                xhr4.setRequestHeader('Content-Type', 'application/json');
+
+                xhr4.onreadystatechange = function () {
+                  if (xhr4.readyState === 4) {
+                    if (xhr4.status === 200) {
+                      alert('收货确认成功！');
+                    } else {
+                      alert('收货确认失败，请重试。');
+                    }
+                  }
+                };
+
+                xhr4.send(JSON.stringify(data));
+              });
+            });
+
+
+            document.addEventListener('DOMContentLoaded', function () {
+              var xhr5 = new XMLHttpRequest();
+              xhr5.open('GET', 'http://localhost:5000/show_finish_order', true);
+              xhr5.setRequestHeader('Content-Type', 'application/json');
+
+              xhr5.onreadystatechange = function () {
+                if (xhr5.readyState === 4 && xhr5.status === 200) {
+                  var orders1 = JSON.parse(xhr5.responseText);
+
+                  var tableBody = document.querySelector('#order-table tbody');
+                  for (var i = 0; i < orders1.length; i++) {
+                    var order = orders1[i];
+
+                    var row = document.createElement('tr');
+                    var orderIdCell = document.createElement('td');
+                    var orderDateCell = document.createElement('td');
+                    var shippingDateCell = document.createElement('td');
+                    var arrivalDateCell = document.createElement('td');
+                    var paymentDateCell = document.createElement('td');
+                    var customerNameCell = document.createElement('td');
+
+                    orderIdCell.textContent = order['订单id'];
+                    orderDateCell.textContent = order['订购日期'];
+                    shippingDateCell.textContent = order['发货日期'];
+                    arrivalDateCell.textContent = order['到货日期'];
+                    paymentDateCell.textContent = order['货款确认日期'];
+                    customerNameCell.textContent = order['货主名称'];
+
+                    row.appendChild(orderIdCell);
+                    row.appendChild(orderDateCell);
+                    row.appendChild(shippingDateCell);
+                    row.appendChild(arrivalDateCell);
+                    row.appendChild(paymentDateCell);
+                    row.appendChild(customerNameCell);
+
+                    tableBody.appendChild(row);
+                  }
+                }
+              };
+
+              xhr5.send();
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

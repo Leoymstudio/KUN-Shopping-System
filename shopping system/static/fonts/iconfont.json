@@ -1,0 +1,30 @@
+{
+  "id": "3457523",
+  "name": "客户559",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "145699",
+      "name": "电话_填充",
+      "font_class": "dianhuatianchong",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    },
+    {
+      "icon_id": "716057",
+      "name": "邮件",
+      "font_class": "youjian",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "5353505",
+      "name": "导航地址",
+      "font_class": "daohangdizhi",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    }
+  ]
+}

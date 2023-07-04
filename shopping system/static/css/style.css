@@ -1,0 +1,279 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Aguazyuan", Courier, monospace;
+}
+
+/*总背景底*/
+.content {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(216, 222, 231);
+  position: relative;
+}
+
+/*中间的登陆页面*/
+.content .login-wrapper {
+  width: 70vw;
+  height: 90vh;
+  background-color: #fff;
+  border-radius: 40px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+}
+
+/*登陆页面左侧的图片*/
+.content .login-wrapper .left-img {
+  border-radius: 40px;
+  flex: 1;
+  background: url(../images/bizhi.jpg) no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+/*文字部分*/
+.content .login-wrapper .left-img .glass {
+  width: 60%;
+  padding: 20px;
+  color: #000000;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+}
+
+/*主标题栏*/
+.content .login-wrapper .left-img .glass .tips .title {
+  width: 25%;
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+  padding: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+}
+
+/*说明性文字*/
+.content .login-wrapper .left-img .glass .tips h1 {
+  margin: 15px 0;
+}
+
+.content .login-wrapper .left-img .glass .tips span {
+  margin: 5px 0;
+  display: block;
+  font-weight: 100;
+}
+
+/*右侧登陆界面*/
+.content .login-wrapper .right-login-form {
+  flex: 1;
+  position: relative;
+}
+
+/*登陆主体部分*/
+.content .login-wrapper .right-login-form .form-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/*Log in文字*/
+.content .login-wrapper .right-login-form .form-wrapper h1 {
+  font-size: 50px;
+  text-align: center;
+}
+.content .login-wrapper .right-login-form .form-wrapper h2 {
+  font-size: 25px;
+  text-align: center;
+}
+
+/*登陆输入部分*/
+.content .login-wrapper .right-login-form .form-wrapper .input-items {
+  margin: 15px 0;
+}
+.content .login-wrapper .right-login-form .form-wrapper .input-items2 {
+  margin: 15px 0;
+}
+
+/*输入提示语*/
+.content .login-wrapper .right-login-form .form-wrapper .input-items .input-tips {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 20px;
+  margin: 8px 0;
+}
+
+/*输入框*/
+.content .login-wrapper .right-login-form .form-wrapper .input-items .inputs {
+  width: 100%;
+  /*height: 50px;*/
+  border-radius: 10px;
+  border: 1px solid rgb(227, 227, 227);
+  padding: 20px;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.5s;
+}
+.content .login-wrapper .right-login-form .form-wrapper .input-items .inputs2 {
+  font-family: "Aguazyuan", Courier, monospace;
+  width: 100%;
+  /*height: 50px;*/
+  border-radius: 10px;
+  border: 1px solid rgb(227, 227, 227);
+  padding: 20px;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.5s;
+}
+.content .login-wrapper .right-login-form .form-wrapper .input-items .inputs3 {
+  width: 100%;
+  /*height: 50px;*/
+  border-radius: 10px;
+  border: 1px solid rgb(227, 227, 227);
+  padding: 20px;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.5s;
+}
+
+/*获得焦点时，即对输入框按下时*/
+.content .login-wrapper .right-login-form .form-wrapper .input-items .inputs:focus {
+  border: 1px solid rgb(128, 106, 196);
+}
+
+/*忘记密码*/
+.content .login-wrapper .right-login-form .form-wrapper .input-items .forgot {
+  float: right;
+  font-weight: 600;
+  text-align: right;
+  margin: 5px 0;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/*登陆页面*/
+.content .login-wrapper .right-login-form .form-wrapper .btn {
+  width: 100%;
+  height: 50px;
+  background-color: rgb(128, 106, 196);
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 25px;
+  margin: 15px 0;
+  cursor: pointer;
+}
+
+/*提示注册*/
+.content .login-wrapper .right-login-form .form-wrapper .signup-tips {
+  text-align: center;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+/*提示注册后一个*/
+.content .login-wrapper .right-login-form .form-wrapper .signup-tips span:last-child {
+  color: rgb(110, 87, 179);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/*其他登陆方式-分割*/
+.content .login-wrapper .right-login-form .form-wrapper .other-login .divider {
+  width: 100%;
+  margin: 15px 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/*分割线*/
+.content .login-wrapper .right-login-form .form-wrapper .other-login .divider .line {
+  display: inline-block;
+  max-width: 35%;
+  width: 35%;
+  flex: 1;
+  height: 1px;
+  background-color: rgb(162, 172, 185);
+}
+
+/*分割文字*/
+.content .login-wrapper .right-login-form .form-wrapper .other-login .divider .divider-text {
+  vertical-align: middle;
+  margin: 0 20px;
+  display: inline-block;
+  width: 50px;
+  color: rgb(162, 172, 185);
+  white-space: normal;
+}
+
+/*其他登陆框*/
+.content .login-wrapper .right-login-form .form-wrapper .other-login .other-login-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*登陆方式选择*/
+.content .login-wrapper .right-login-form .form-wrapper .other-login .other-login-wrapper .other-login-item {
+  width: 70px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  color: rgb(51, 49, 116);
+  margin: 0 10px;
+  transition: 0.4s;
+}
+
+.content .login-wrapper .right-login-form .form-wrapper .other-login .other-login-wrapper .other-login-item img {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+}
+
+.content .login-wrapper .right-login-form .form-wrapper .other-login .other-login-wrapper .other-login-item span {
+  vertical-align: middle;
+}
+
+.content .login-wrapper .right-login-form .form-wrapper .other-login .other-login-wrapper .other-login-item:hover {
+  width: 80px;
+  height: 50%;
+  background-color: #fff;
+  border: 0;
+  box-shadow: 1px 10px 32px 1px rgba(186, 175, 221, 0.37);
+}
+
+@media (max-width: 1024px) {
+  .login-wrapper {
+    padding: 20px;
+  }
+
+  .login-wrapper .left-img {
+    display: none;
+  }
+
+  .login-wrapper .right-login-form {
+    padding: 20px;
+  }
+}
+
+/*# sourceMappingURL=style2.css.map */

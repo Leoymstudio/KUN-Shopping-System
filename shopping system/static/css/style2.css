@@ -1,0 +1,398 @@
+img {
+  width: 100%;
+  vertical-align: middle;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.w {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+body {
+  background: #eeeeee;
+}
+
+header {
+  height: 75px;
+  background: #31393c;
+}
+
+.box {
+  justify-content: center;
+  padding: 20px;
+  color: #F7E5C3;
+  background: #31393c;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.header .nav {
+  height: 100%;
+}
+
+.header .nav .logo {
+  margin-right: 30px;
+  display: flex;
+  align-items: center;
+  width: 60px;
+}
+
+.header .nav-meau,
+.header .user {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.header .nav-meau li,
+.header .user li {
+  height: 100%;
+}
+
+.header .nav-meau li a,
+.header .user li a {
+  padding: 0 25px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: #F7E5C3;
+}
+
+.header .nav-meau li a:hover,
+.header .user li a:hover,
+.header .nav-meau li a.active,
+.header .user li a.active {
+  transition: all 0.3s;
+  color: #31393c;
+  background: #F7E5C3;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header-bg {
+  margin-bottom: 25px;
+  position: relative;
+  height: 300px;
+}
+
+.header-bg img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  filter: blur(8px);
+}
+
+.header-bg .title {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  color: #F7E5C3;
+  font-weight: 600;
+  font-size: 18px;
+  background: #31393c;
+}
+
+.banner-bg {
+  position: absolute;
+  width: 100%;
+  background-image: url("../images/bizhi.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(10px);
+}
+
+.banner {
+  position: relative;
+}
+
+.banner .swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.banner .swiper-slide {
+  background-position: center;
+  background-size: cover;
+}
+
+.banner .swiper-slide img {
+  display: block;
+  width: 100%;
+}
+
+.banner .swiper-button-next,
+.banner .swiper-button-prev {
+  color: #fff;
+}
+
+.banner .swiper-pagination-bullet-active {
+  background: #fff;
+}
+
+.banner .swiper-pagination-bullet {
+  width: 15px;
+  height: 15px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.content .content-l {
+  width: 850px;
+}
+
+.content .content-l .card {
+  margin-bottom: 15px;
+}
+
+.butn{
+  width: 100%;
+  height: 50px;
+  background-color: rgb(245, 227, 194);
+  border: 0;
+  border-radius: 10px;
+  color: #31393c;
+  font-size: 25px;
+  margin: 15px 0;
+  cursor: pointer;
+}
+
+h2{
+  font-size: 25px;
+  text-align: center;
+}
+
+.content .content-r {
+  width: 325px;
+}
+
+.footer {
+  padding: 15px;
+  color: #F7E5C3;
+  background: #31393c;
+}
+
+.footer a {
+  color: #F7E5C3;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.contentAbout .card {
+  margin-bottom: 0 !important;
+}
+
+.contentAbout .picbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contentAbout .picbox .pic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: 75px;
+  background: #31393c;
+  border-radius: 5px;
+}
+
+.contentAbout .picbox .pic .iconfont {
+  font-size: 30px;
+  color: #F7E5C3;
+}
+
+.contentAbout .btn {
+  color: #F7E5C3;
+  background: #31393c;
+}
+
+.contentAbout .btn.focus,
+.contentAbout .btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem #F7E5C3;
+}
+
+.contentBlog .card a {
+  color: #F7E5C3;
+}
+
+.contentBlog .pic {
+  height: 200px;
+}
+
+.contentBlog .pic img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.contentBlog .page-link {
+  color: #31393c;
+  border: 1px solid #31393c;
+}
+
+.contentBlog .page-item.active .page-link {
+  color: #F7E5C3;
+  background-color: #31393c;
+  border-color: #31393c;
+}
+
+.contentBlog .page-item.disabled .page-link {
+  border-color: #31393c;
+}
+
+.contentBlogDetails .blockquote {
+  padding-left: 25px;
+  border-left: 3px solid #31393c;
+}
+
+.contentBlogDetails .userBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contentBlogDetails .userBox .user {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+}
+
+.contentBlogDetails .btn {
+  color: #F7E5C3;
+  background: #31393c;
+}
+
+.contentBlogDetails .btn.focus,
+.contentBlogDetails .btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem #F7E5C3;
+}
+
+.contentVideo .item {
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.contentVideo .item .pic {
+  position: relative;
+  overflow: hidden;
+}
+
+.contentVideo .item .pic img {
+  height: 150px;
+  object-fit: cover;
+}
+
+.contentVideo .item .pic::after {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  background: rgba(0, 0, 0, 0.3) url(icon-bf.png) no-repeat center;
+  background-size: 45px;
+}
+
+.contentVideo .item:hover .pic::after {
+  animation: move 0.2s forwards;
+}
+
+@keyframes move {
+  0% {
+    top: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+.fixedVideo {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.fixedVideo .videoBox {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.7);
+}
+
+.fixedVideo .videoBox video {
+  width: 100%;
+  height: 100%;
+}
+
+.fixedVideo .videoBox .btn-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45px;
+  height: 45px;
+  border: 0;
+  color: #000;
+  background: #fff;
+}
+
+.fixedVideo .videoBox .btn-close:hover {
+  transition: all 0.3s;
+  color: #fff;
+  background: red;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-list {
+  flex-basis: 70%;
+}
+
+.cart {
+  flex-basis: 30%;
+}

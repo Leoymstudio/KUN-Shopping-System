@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>雇员中心</title>
+  <script src="{{ url_for('static', filename='/script/jquery-3.6.0.js') }}"></script>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/fonts/iconfont.css">
+  <link rel="stylesheet" href="../static/css/style2.css">
+
+</head>
+
+<body>
+  <header>
+    <div class="w header">
+      <nav class="nav">
+        <a href="http://localhost:5000" class="logo">
+          <img src="../static/images/logo.gif" alt="">
+        </a>
+        <ul class="nav-meau">
+          <li><a href="http://localhost:5000" class="active">首页</a></li>
+          <li><a href="http://localhost:5000/chanpingzhanshi" >产品展示</a></li>
+          <li><a href="http://localhost:5000/about">联系我们</a></li>
+        </ul>
+      </nav>
+      <ul class="user">
+        <li><a href="http://localhost:5000/login">登录</a></li>
+        <li><a href="http://localhost:5000/register">注册</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="header-bg">
+    <img src="../static/images/banner.png" alt="">
+    <div class="title">
+      订单申请列表
+    </div>
+  </div>
+  <div class="content w py-3 contentVideo">
+    <div class="content-l">
+      <div class="row">
+        <div class="card mb-3 box">
+          <div id="order-list"></div>
+
+          <script>
+            // 获取订单申请
+            function fetchOrders() {
+              $.ajax({
+                url: "http://localhost:5000/showtencent",
+                method: "GET",
+                dataType: "json",
+                success: function (response) {
+                  displayOrders(response);
+                },
+                error: function () {
+                  alert("无法获取订单申请。");
+                }
+              });
+            }
+
+            // 显示订单申请
+            function displayOrders(orders) {
+              var orderList = $("#order-list");
+              orderList.empty();
+
+              if (orders.length === 0) {
+                orderList.append("<p>暂无订单申请。</p>");
+              } else {
+                for (var i = 0; i < orders.length; i++) {
+                  var order = orders[i];
+                  var customerId = order.客户id;
+
+                  var orderDiv = $("<div>");
+                  var orderText = $("<p>").text("客户ID:" + customerId);
+                  var acceptButton = $("<button>").text("同意").click(function () {
+                    acceptOrder(customerId);
+                  });
+                  var rejectButton = $("<button>").text("拒绝").click(function () {
+                    rejectOrder(customerId);
+                  });
+
+                  orderDiv.append(orderText, acceptButton, rejectButton);
+                  orderList.append(orderDiv);
+                }
+              }
+            }
+
+            // 同意订单申请
+            function acceptOrder(customerId) {
+              var employeeId = 1;  // 将此处替换为雇员的ID
+
+              var data = {
+                deal: 1
+              };
+
+              $.ajax({
+                url: "http://localhost:5000/tencent",
+                method: "POST",
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: 'application/json',
+                success: function (response) {
+                  alert("已同意订单申请。");
+                  fetchOrders();  // 刷新订单列表
+                },
+                error: function () {
+                  alert("无法处理订单申请。");
+                }
+              });
+            }
+
+            // 拒绝订单申请
+            function rejectOrder(customerId) {
+              var data = {
+                deal: 0
+              };
+
+              $.ajax({
+                url: "http://localhost:5000/tencent",
+                method: "POST",
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: 'application/json',
+                success: function (response) {
+                  alert("已拒绝订单申请。");
+                  fetchOrders();  // 刷新订单列表
+                },
+                error: function () {
+                  alert("无法处理订单申请。");
+                }
+              });
+            }
+
+            // 页面加载时获取订单列表
+            $(document).ready(function () {
+              fetchOrders();
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+<!--    <div class="content-r">-->
+
+<!--      <h4 class="mb-3">网站信息</h4>-->
+<!--      <footer class="footer shadow-lg">-->
+<!--        <p>健康提示</p>-->
+<!--        <p>出生于1996，梦想作说唱领袖</p>-->
+<!--        <p>友情链接</p>-->
+<!--        <p>-->
+<!--          <a-->
+<!--            href="https://baike.baidu.com/link?url=iQERV4np4AxhxMGspCdpOEirc8Guz9QlfnEQdys_vxzE2XBjKbwyBCjAiCLsch2Fo0bPntH4zR0NMWAJgmxvvuFRR0qowc_MIRkHZ4RiEWq">小鬼&nbsp;&nbsp;</a>-->
+<!--          <a-->
+<!--            href="https://baike.baidu.com/item/%E5%A7%9C%E4%BA%91%E5%8D%87/53482723?fromModule=lemma-qiyi_sense-lemma">姜云升&nbsp;&nbsp;</a>-->
+<!--          <a-->
+<!--            href="https://baike.baidu.com/item/%E5%BC%A0%E7%A0%9A%E6%8B%99/23605392?fromtitle=capper&fromid=23605444&fr=aladdin">Capper&nbsp;&nbsp;</a>-->
+<!--          <a-->
+<!--            href="https://baike.baidu.com/link?url=NefXAkgq_j7QAfUZyXDKP3Tf1t4oYojHNcLjbCFxi4EcF_M1NOclh601x72lw12sJ9Fgcnj9yqjyvYY0PCM4eTlJnH9ZEN3mAq9I9rBJsDy">华晨宇&nbsp;&nbsp;</a>-->
+<!--        </p>-->
+<!--      </footer>-->
+<!--    </div>-->
+<!--  </div>-->
+  </div>
+
+<!--  &lt;!&ndash; 浮动播放框 &ndash;&gt;-->
+<!--  <div class="fixedVideo">-->
+<!--    <div class="videoBox">-->
+<!--      <video src="" controls></video>-->
+<!--      <button class="btn-close">X</button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <script src="../static/script/jquery-3.4.1.min.js"></script>-->
+<!--  <script src="../static/script/bootstrap.min.js"></script>-->
+<!--  <script>-->
+<!--    var videoSrc = [-->
+<!--      'images/2.mp4',-->
+<!--      'images/2.mp4',-->
+<!--      'images/2.mp4',-->
+<!--      'images/2.mp4'-->
+<!--    ]-->
+<!--    $.each(videoSrc, (index, item) => {-->
+<!--      $('.contentVideo .item').eq(index).attr('data-src', item)-->
+<!--    })-->
+
+<!--    $('.btn-close').on('click', function () {-->
+<!--      $('.fixedVideo').fadeOut()-->
+<!--    })-->
+
+<!--    $('.contentVideo .item').on('click', function () {-->
+<!--      $('.fixedVideo').fadeIn()-->
+<!--      $('.fixedVideo video').attr('src', $(this).attr('data-src'))-->
+<!--    })-->
+<!--  </script>-->
+
+</body>
+
+</html>

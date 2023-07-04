@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>订单信息</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    function submitOrder() {
+      var ownerName = document.getElementById("ownerName").value;
+      var ownerAddress = document.getElementById("ownerAddress").value;
+      var ownerCity = document.getElementById("ownerCity").value;
+      var ownerRegion = document.getElementById("ownerRegion").value;
+      var ownerPostalCode = document.getElementById("ownerPostalCode").value;
+      var ownerCountry = document.getElementById("ownerCountry").value;
+
+      var orderData = {
+        ownerName: ownerName,
+        ownerAddress: ownerAddress,
+        ownerCity: ownerCity,
+        ownerRegion: ownerRegion,
+        ownerPostalCode: ownerPostalCode,
+        ownerCountry: ownerCountry
+      };
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "http://localhost:5000/receive_order", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          // 请求成功后的操作
+          alert("订单信息已提交！");
+          window.location.href = "http://localhost:5000/showyonghu";
+        }
+      };
+      xhr.send(JSON.stringify(orderData));
+    }
+  </script>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/fonts/iconfont.css">
+  <link rel="stylesheet" href="../static/css/style2.css">
+</head>
+
+<body>
+  <header>
+    <div class="w header">
+      <nav class="nav">
+        <a href="zhuye.html" class="logo">
+          <img src="../static/images/logo.gif" alt="">
+        </a>
+        <ul class="nav-meau">
+          <li><a href="http://localhost:5000" class="active">首页</a></li>
+          <li><a href="http://localhost:5000/chanpingzhanshi" >产品展示</a></li>
+          <li><a href="http://localhost:5000/about">联系我们</a></li>
+        </ul>
+      </nav>
+      <ul class="user">
+        <li><a href="http://localhost:5000/login">登录</a></li>
+        <li><a href="http://localhost:5000/register">注册</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="header-bg">
+    <img src="../static/images/banner.png" alt="">
+    <div class="title">
+      完善订单信息
+    </div>
+  </div>
+  <div class="content w py-3 contentBlog">
+    <div class="content-l">
+      <div class="row">
+        <!--                <div class="container">-->
+        <!--                    <div class="product-list">-->
+        <div class="col-4">
+          <div class="card item" data-src="">
+            <form>
+              <label for="ownerName">货主名称:</label>
+              <input type="text" id="ownerName" name="ownerName" required><br>
+
+              <label for="ownerAddress">货主地址:</label>
+              <input type="text" id="ownerAddress" name="ownerAddress" required><br>
+
+              <label for="ownerCity">货主城市:</label>
+              <input type="text" id="ownerCity" name="ownerCity" required><br>
+
+              <label for="ownerRegion">货主地区:</label>
+              <input type="text" id="ownerRegion" name="ownerRegion" required><br>
+
+              <label for="ownerPostalCode">货主邮政编码:</label>
+              <input type="text" id="ownerPostalCode" name="ownerPostalCode" required><br>
+
+              <label for="ownerCountry">货主国家:</label>
+              <input type="text" id="ownerCountry" name="ownerCountry" required><br>
+
+              <input type="button" value="提交订单" onclick="submitOrder()">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

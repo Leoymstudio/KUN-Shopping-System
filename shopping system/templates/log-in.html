@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+        a {
+            text-decoration: none
+        }
+
+        /*a:hover{ text-decoration:none}*/
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="login-wrapper">
+            <div class="left-img">
+                <div class="glass">
+                    <div class="tips">
+                        <div class="title">
+                            IKUN
+                        </div>
+                        <h1>Welcome to KUN KUN SHOPPING</h1>
+                        <span>5 Million+ people have joined IKUN.</span>
+                        <span>we invite you to join the tribe</span>
+                    </div>
+                </div>
+            </div>
+            <div class="right-login-form">
+                <div class="form-wrapper">
+                    <h2>Log in</h2>
+                    <form>
+                        <div class="input-items">
+                            <span class="input-tips">
+                                用户名
+                            </span>
+                            <br>
+                            <input type="text" class="inputs" name="username" placeholder="Enter your username">
+                        </div>
+                        <div class="input-items">
+                            <span class="input-tips">
+                                密码
+                            </span>
+                            <br>
+                            <input type="password" class="inputs" name="password" placeholder="Enter your password">
+                        </div>
+                        <div class="input-items">
+                            <span class="input-tips">
+                                身份
+                            </span>
+                            <br>
+                            <select name="identity" class="inputs2">
+                                <option value="1">客户</option>
+                                <option value="2">雇员</option>
+                                <option value="3">供应商</option>
+                            </select>
+                        </div>
+                        <input type="button" class="btn" value="Log in" onclick="login()">
+                    </form>
+                    <script>
+                        function login() {
+                            // 从页面上获取用户输入的信息
+                            var Username = document.getElementsByName('username')[0].value;
+                            var Password = document.getElementsByName('password')[0].value;
+                            var Identity = document.getElementsByName('identity')[0].value;
+
+                            // 构造请求对象
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", "http://localhost:5000/login", true);
+                            xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+
+                            // 处理响应
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                                    var response = JSON.parse(xhr.responseText);
+                                    // 根据响应结果，更新页面
+                                    if (response.success) {
+                                        alert("登录成功！");
+                                        if (Identity == 1)
+                                            window.location.href = "http://localhost:5000/showyonghu";
+                                        else if (Identity == 2)
+                                            window.location.href = "http://localhost:5000/showguyuan";
+                                        else if (Identity == 3)
+                                            window.location.href = "http://localhost:5000/showgongyingshang";
+                                    }
+                                    else {
+                                        alert("登录失败：" + response.message);
+                                    }
+                                }
+                            };
+                            // 发送请求
+                            xhr.send(JSON.stringify({ Username: Username, Password: Password, Identity: Identity }));
+                        }
+                    </script>
+                    <!--注册-->
+                    <div class="signup-tips">
+                        <span>没有账号？</span>
+                        <a href="http://localhost:5000/register"><span>注册</span></a>
+                    </div>
+                    <div class="other-login">
+                        <div class="divider">
+                            <span class="line"></span>
+                            <span class="divider-text">or</span>
+                            <span class="line"></span>
+                        </div>
+                        <div class="other-login-wrapper">
+                            <div class="other-login-item">
+                                <img src="../static/images/QQ.png" alt="QQ">
+                            </div>
+                            <div class="other-login-item">
+                                <img src="../static/images/WeChat.png" alt="WeChat">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
+
+<!--日志-->
+<!--1.增加了用户选择-->
+<!--2.增加了登陆-超链接-->

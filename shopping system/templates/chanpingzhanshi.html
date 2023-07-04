@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品展示</title>
+    <style>
+        .product-container {
+            position:absolute;
+            left: 25%;
+            width: 760px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .category {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product img {
+            width: 50%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+<!--    <script src="../static/script/charts.js"></script>-->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/fonts/iconfont.css">
+    <link rel="stylesheet" href="../static/css/style2.css">
+</head>
+
+<body>
+    <header>
+        <div class="w header">
+            <nav class="nav">
+                <a href="http://localhost:5000" class="logo">
+                    <img src="../static/images/logo.gif" alt="">
+                </a>
+                <ul class="nav-meau">
+                    <li><a href="http://localhost:5000" class="active">首页</a></li>
+                    <li><a href="http://localhost:5000/chanpingzhanshi" >产品展示</a></li>
+                    <li><a href="http://localhost:5000/about">联系我们</a></li>
+                </ul>
+            </nav>
+            <ul class="user">
+                <li><a href="http://localhost:5000/login">登录</a></li>
+                <li><a href="http://localhost:5000/register">注册</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="header-bg">
+        <img src="../static/images/banner.png" alt="">
+        <div class="title">
+            产品展示
+        </div>
+    </div>
+
+    <div id="products" class="product-container">
+        <script>
+            // 从后端获取JSON数据
+            fetch('http://localhost:5000/show_cp')
+                .then(response => response.json())
+                .then(data => {
+                    // 构建产品展示
+                    const productsContainer = document.getElementById('products');
+                    const displayedCategories = new Set(); // 用于跟踪已经显示过的类别
+
+                    // 根据后端数据渲染
+                    data.forEach(kind => {
+                        if (!displayedCategories.has(kind.类别名称)) {
+                            const categoryElement = document.createElement('div');
+                            categoryElement.classList.add('category');
+
+                            const categoryTitleElement = document.createElement('p');
+                            categoryTitleElement.classList.add('category-title');
+                            categoryTitleElement.textContent = '类别名: ' + kind.类别名称;
+                            categoryElement.appendChild(categoryTitleElement);
+
+                            const productElement = document.createElement('div');
+                            productElement.classList.add('product');
+
+                            const imageElement = document.createElement('img');
+                            imageElement.src = 'data:image/jpeg;base64,' + kind.图;
+                            productElement.appendChild(imageElement);
+
+                            const nameElement = document.createElement('p');
+                            nameElement.textContent = '包括产品: ' + kind.产品名称;
+                            productElement.appendChild(nameElement);
+
+                            categoryElement.appendChild(productElement);
+                            productsContainer.appendChild(categoryElement);
+
+                            displayedCategories.add(kind.类别名称);
+                        } else {
+                            const categoryElements = document.getElementsByClassName('category');
+                            const lastCategoryElement = categoryElements[categoryElements.length - 1];
+
+                            const productElement = document.createElement('div');
+                            productElement.classList.add('product');
+
+                            const nameElement = document.createElement('p');
+                            nameElement.textContent = kind.产品名称;
+                            productElement.appendChild(nameElement);
+
+                            lastCategoryElement.appendChild(productElement);
+                        }
+                    });
+                });
+        </script>
+    </div>
+</body>
+
+</html>

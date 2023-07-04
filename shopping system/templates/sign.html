@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+  <div class="content">
+    <div class="login-wrapper" style="height: 95vh">
+      <div class="left-img">
+        <div class="glass">
+          <div class="tips">
+            <div class="title">
+              Shopping System
+            </div>
+            <h1>Welcome to our website</h1>
+            <span>5 Million+ people have joined our network.</span>
+            <span>we invite you to join the tribe</span>
+          </div>
+        </div>
+      </div>
+      <div class="right-login-form">
+        <div class="form-wrapper">
+          <h2>Sign up</h2>
+          <form id="infoForm">
+            <div class="input-items">
+              <label>用户名</label>
+              <input type="text" id="username" name="username" class="input"><br>
+            </div>
+
+            <div class="input-items">
+              <label>密码</label>
+              <input type="password" id="password" name="password" class="input3"><br>
+            </div>
+
+            <label>角色</label>
+            <select id="role" name="role" class="input-items3">
+              <option value="employee">雇员</option>
+              <option value="customer">客户</option>
+              <option value="supplier">供应商</option>
+            </select><br><br>
+
+            <label for="customerId">客户ID</label>
+            <input type="text" id="customerid" name="customerid"><br><br>
+
+            <label for="companyName">公司名称</label>
+            <input type="text" id="companyname" name="companyname"><br><br>
+
+            <label for="contactName">联系人姓名</label>
+            <input type="text" id="contactname" name="contactname"><br><br>
+
+            <label for="contactTitle">联系人职务</label>
+            <input type="text" id="contacttitle" name="contacttitle"><br><br>
+
+            <label for="address">地址</label>
+            <input type="text" id="address" name="address"><br><br>
+
+            <label for="city">城市</label>
+            <input type="text" id="city" name="city"><br><br>
+
+            <label for="region">地区</label>
+            <input type="text" id="region" name="region"><br><br>
+
+            <label for="postalCode">邮政编码</label>
+            <input type="text" id="postalcode" name="postalcode"><br><br>
+
+            <label for="country">国家</label>
+            <input type="text" id="country" name="country"><br><br>
+
+            <label for="phone">电话</label>
+            <input type="text" id="phone" name="phone"><br><br>
+
+            <label for="fax">传真</label>
+            <input type="text" id="fax" name="fax"><br><br>
+
+            <input type="submit" class="btn" value="sign up">
+          </form>
+          <script>
+            // 发送 JSON 数据到不同域名
+            function sendJSONToDomain(url, filename, data) {
+              var xhr = new XMLHttpRequest();
+              xhr.open("POST", url, true);
+              xhr.setRequestHeader("Content-Type", "application/json");
+              xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                  if (xhr.status === 200) {
+                    // 请求成功处理逻辑
+                    console.log(xhr.responseText); // 可以将响应信息打印到控制台
+                    alert("注册成功！");
+                    window.location.href = "http://localhost:5000/login";
+                  } else {
+                    // 请求失败处理逻辑
+                    alert("注册失败失败，请稍后再试。");
+                  }
+                }
+              };
+
+              xhr.send(data);
+            }
+
+            // 处理表单提交的函数
+            function submitForm(event) {
+              event.preventDefault(); // 阻止表单提交刷新页面
+
+              // 获取表单值
+              var username = document.getElementById("username").value;
+              var password = document.getElementById("password").value;
+              var role = document.getElementById("role").value;
+              var customerid = document.getElementById("customerid").value;
+              var companyName = document.getElementById("companyname").value;
+              var contactName = document.getElementById("contactname").value;
+              var contactTitle = document.getElementById("contacttitle").value;
+              var address = document.getElementById("address").value;
+              var city = document.getElementById("city").value;
+              var region = document.getElementById("region").value;
+              var postalCode = document.getElementById("postalcode").value;
+              var country = document.getElementById("country").value;
+              var phone = document.getElementById("phone").value;
+              var fax = document.getElementById("fax").value;
+
+              // 创建 JSON 对象
+              var userInfo = {
+                username: username,
+                password: password,
+                customerid: customerid
+              };
+
+              var customerInfo = {
+                customerid: customerid,
+                companyName: companyName,
+                contactName: contactName,
+                contactTitle: contactTitle,
+                address: address,
+                city: city,
+                region: region,
+                postalCode: postalCode,
+                country: country,
+                phone: phone,
+                fax: fax
+              };
+
+              // 将 JSON 对象转换为字符串
+              var userInfoString = JSON.stringify(userInfo);
+              var customerInfoString = JSON.stringify(customerInfo);
+
+              // 发送 JSON 文件到不同的域名
+              sendJSONToDomain("http://localhost:5000/register", "user_info.json", userInfoString);
+              sendJSONToDomain("http://localhost:5000/filling", "customer_info.json", customerInfoString);
+            }
+
+            // 添加事件监听器到表单提交事件
+            var form = document.getElementById("infoForm");
+            form.addEventListener("submit", submitForm);
+
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
